@@ -18,7 +18,7 @@ gallery:
 
 Cenas
 
-[Mini rullo žalūzijas (PDF)](https://lite.lv/wp-content/uploads/2015/07/2015.07.23.Lite_cenradis_gatavas_rullo_mini_zaluzijas_AKCIJA.pdf)
-[Gatavās bambusa žalūzijas (PDF)](https://lite.lv/wp-content/uploads/2015/08/2015.08.12.Lite-cenradis-gatavas-Bambusa-Zaluzijas-Mtirdzn.pdf)
+[Mini rullo žalūzijas (PDF)](/wp-content/uploads/2015/07/2015.07.23.Lite_cenradis_gatavas_rullo_mini_zaluzijas_AKCIJA.pdf)
+[Gatavās bambusa žalūzijas (PDF)](/wp-content/uploads/2015/08/2015.08.12.Lite-cenradis-gatavas-Bambusa-Zaluzijas-Mtirdzn.pdf)
 
 Lai iegūtu papildus informāciju zvani: 67619001

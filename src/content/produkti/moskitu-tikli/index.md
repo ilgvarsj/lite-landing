@@ -45,7 +45,7 @@ Mērīšana & Lietošana
 
 **Mērīšana**
 
-Jāmēra ārējais loga rāmis ar precizitāti līdz milimetram. Kā arī ir svarīgi nomērīt loga rāmja biezumu. Skatīt [Insektu tīkla mērīšanas instrukciju](https://lite.lv/wp-content/uploads/2018/02/ka_merit_insektu_tiklu.pdf)
+Jāmēra ārējais loga rāmis ar precizitāti līdz milimetram. Kā arī ir svarīgi nomērīt loga rāmja biezumu. Skatīt [Insektu tīkla mērīšanas instrukciju](/wp-content/uploads/2018/02/ka_merit_insektu_tiklu.pdf)
 
 **Uzstādīšana**
 

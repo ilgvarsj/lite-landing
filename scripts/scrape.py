@@ -24,12 +24,14 @@ EXTRA = {
     "/home-lat/par-mums/": "par-mums",
     "/tehniska-informacija/": "tehniska-informacija",
     "/dileri-latvija/": "dileri-latvija",
+    "/privatuma-politika/": "privatuma-politika",
 }
 
 
 # Paths that exist in the new site; other internal links stay absolute to lite.lv
+# (/wp-content/ files are copied into public/ so they keep working after the cutover.)
 LOCAL_PREFIXES = ("/produkti/", "/kontakti/", "/home-lat/par-mums/", "/tehniska-informacija/",
-                  "/dileri-latvija/")
+                  "/dileri-latvija/", "/privatuma-politika/", "/wp-content/")
 
 
 def get(url, binary=False):

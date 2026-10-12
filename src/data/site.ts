@@ -94,13 +94,42 @@ export const categoryBlurbs: Record<string, string> = {
   'gatava-produkcija': 'Gatavas žalūzijas un aizkari, ko var paņemt uzreiz.',
 };
 
-/** Links to sections of the old site that are not migrated yet. */
+/** Links to sections of the old site that are not migrated yet.
+ *  They assume the WordPress site stays reachable at this origin; update when it moves (e.g. old.lite.lv). */
 export const legacy = {
   portfolio: 'https://lite.lv/portfolio/',
   blog: 'https://lite.lv/blogs-lite/',
   sale: 'https://lite.lv/izpardosana/',
   fabrics: 'https://lite.lv/visi-aizkaru-audumi/',
-  privacy: 'https://lite.lv/privatuma-politika/',
   en: 'https://lite.lv/eng/',
   ru: 'https://lite.lv/rus/',
 };
+
+/** Team as listed on the old Kontakti page. */
+export const team = [
+  { name: 'Inga Avotiņa', role: 'Projektu vadītāja', phone: '+371 29605689', email: 'info@lite.lv', whatsapp: true },
+  { name: 'Anita Kokoreviča', role: 'Projektu vadītāja', phone: '+371 26543908', email: 'anita@lite.lv', whatsapp: true },
+  { name: 'Ēriks Kiršteins', role: 'Žalūziju projektu vadītājs', phone: '+371 29511154', email: 'eriks@lite.lv' },
+  { name: 'Gunta Mosāne', role: 'Aizkaru un žalūziju projektu vadītāja', phone: '+371 29226786', tel: '+371 67603205', email: 'gunta@lite.lv' },
+  { name: 'Ingrīda Vilnīte', role: 'Aizkaru un žalūziju projektu vadītāja, dizainere', phone: '+371 26363204', tel: '+371 67842781' },
+  { name: 'Gatis Kokorevičs', role: 'Ārējās ēnošanas sistēmu projektu vadītājs', phone: '+371 29620420', email: 'gatis@lite.lv' },
+  { name: 'Vija Motmillere', role: 'Aizkaru stangu un sliežu vairumtirdzniecība', phone: '+371 29126121', tel: '+371 67624316', email: 'noliktava@lite.lv' },
+  { name: 'Dace Freiberga', role: 'Grāmatvedība', tel: '+371 67619011', email: 'finanses@lite.lv' },
+] as { name: string; role: string; phone?: string; tel?: string; email?: string; whatsapp?: boolean }[];
+
+export const requisites = [
+  {
+    name: 'SIA LITE',
+    reg: '40003326470',
+    vat: 'LV40003326470',
+    address: 'Krūzes iela 3, Rīga, LV-1046',
+    banks: ['Swedbank AS, HABALV22, LV20HABA0001408047887', 'SEB banka AS, UNLALV2X, LV63UNLA0003027467544'],
+  },
+  {
+    name: 'SIA LITES DEKO',
+    reg: '40003576454',
+    vat: 'LV40003576454',
+    address: 'Tērbatas iela 93/95, Rīga, LV-1001',
+    banks: ['Swedbank AS, HABALV22, LV07HABA0551001904971'],
+  },
+];

@@ -60,7 +60,7 @@ Aicinām izmantot mūsu speciālistu pakalpojumus, lai rezultāts ir tāds, kād
 - Veicot mērījumus, stangu izvēlaties garāku par loga aili. Tas ne vien estētiski izskatīsies labāk, bet arī ļaus dienas gaismai ienākt mājoklī.
 - Lai dzīvokli vizuāli paplašinātu, stangu stipriniet pēc iespējas tuvāk griestiem. Tas griestiem liks izskatīties augstākiem.
 - Garumu rekomendējam izvēlēties līdz grīdai vai mazliet garākus.
-- Aizkaru audumam ir jābūt vismaz 2x platākam nekā logs. Aizvērtā veidā logs vizuāli izskatīsies daudz, daudz labāk.    Piezīme: Ja paši esat veikuši mērījumus, tad mēs neuzņemamies atbildību par rezultātu, kas attiecas uz veiktajiem izmēriem.       [Ilustratīva pamācība](https://lite.lv/wp-content/uploads/2023/06/aizkaru-merisana.jpg)
+- Aizkaru audumam ir jābūt vismaz 2x platākam nekā logs. Aizvērtā veidā logs vizuāli izskatīsies daudz, daudz labāk.    Piezīme: Ja paši esat veikuši mērījumus, tad mēs neuzņemamies atbildību par rezultātu, kas attiecas uz veiktajiem izmēriem.       [Ilustratīva pamācība](/wp-content/uploads/2023/06/aizkaru-merisana.jpg)
 
 ## Mūsu sadarbības partneri
 

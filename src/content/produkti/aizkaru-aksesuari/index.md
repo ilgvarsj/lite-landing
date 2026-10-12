@@ -57,4 +57,4 @@ gallery:
 
 ## Aizkaru dekoratīvās lentes
 
-[**AIZKARU SAVELKOŠĀS LENTES**](https://lite.lv/wp-content/uploads/2022/11/LENTAS-katalogs.pdf)
+[**AIZKARU SAVELKOŠĀS LENTES**](/wp-content/uploads/2022/11/LENTAS-katalogs.pdf)

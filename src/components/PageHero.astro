@@ -11,17 +11,20 @@ interface Props {
   imageAlt?: string;
 }
 const { title, lead, crumbs, image, imageAlt } = Astro.props;
+// Panoramic banners (e.g. 1500×430 from the old site) would be cropped badly in the side column.
+const wide = !!image && image.width / image.height > 2;
+const side = image && !wide;
 ---
 
 <section class="border-b border-sand-200">
-  <div class:list={['container-x grid gap-10 py-10 lg:py-14', image && 'lg:grid-cols-12 lg:items-center']}>
-    <div class="lg:col-span-6">
+  <div class:list={['container-x grid gap-10 py-10 lg:py-14', side && 'lg:grid-cols-12 lg:items-center']}>
+    <div class:list={[side && 'lg:col-span-6']}>
       <Breadcrumbs items={crumbs} />
       <h1 class="mt-6 text-4xl leading-[1.08] sm:text-5xl lg:text-6xl">{title}</h1>
       {lead && <p class="mt-5 max-w-xl text-lg leading-relaxed text-muted">{lead}</p>}
       <div class="mt-8 flex flex-wrap gap-3"><slot /></div>
     </div>
-    {image && (
+    {side && (
       <div class="lg:col-span-6">
         <Image
           src={image}
@@ -33,6 +36,16 @@ const { title, lead, crumbs, image, imageAlt } = Astro.props;
           fetchpriority="high"
         />
       </div>
+    )}
+    {wide && (
+      <Image
+        src={image}
+        alt={imageAlt ?? title}
+        layout="full-width"
+        widths={[720, 1280, 1600]}
+        class="w-full rounded-[2rem] object-cover"
+        loading="eager"
+      />
     )}
   </div>
 </section>

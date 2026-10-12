@@ -52,9 +52,12 @@ It shows up automatically on its category page, in the menu and in the sitemap.
 
 The site is static. Set `PUBLIC_FORM_ENDPOINT` (see `.env.example`) to a form backend, e.g. Formspree or Netlify Forms. Without it, the form falls back to a `mailto:` link.
 
-## Not migrated yet
+## Not migrated yet — read before go-live
 
-The blog, portfolio, sale (izpārdošana), fabric collection pages and the EN/RU versions still link to the old site (`legacy` in `src/data/site.ts`).
+The blog, portfolio, sale (izpārdošana), fabric collection pages and the EN/RU versions still link to the old WordPress site at `https://lite.lv/...` (`legacy` in `src/data/site.ts`).
+**If this site replaces WordPress at lite.lv, those links break.** Before cutover, either migrate those sections or move WordPress to e.g. `old.lite.lv` and update `legacy`.
+
+PDFs and images that product texts link to (`/wp-content/uploads/...`) are copied into `public/`, so they keep working after cutover.
 
 ## Re-importing content
 

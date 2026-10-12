@@ -34,7 +34,7 @@ const large = await Promise.all(images.map((img) => getImage({ src: img.src, wid
 
 <dialog class="lightbox m-auto max-h-none max-w-none bg-transparent p-0 backdrop:bg-navy-950/90" aria-label="Attēls">
   <figure class="relative grid h-dvh w-dvw place-items-center p-4 sm:p-10">
-    <img alt="" class="max-h-full max-w-full rounded-xl object-contain shadow-2xl" />
+    <img alt="" class="max-h-[calc(100dvh-2rem)] max-w-[calc(100vw-2rem)] rounded-xl object-contain shadow-2xl sm:max-h-[calc(100dvh-5rem)] sm:max-w-[calc(100vw-9rem)]" />
     <button type="button" data-close class="absolute right-4 top-4 grid size-12 place-items-center rounded-full bg-white/10 text-white backdrop-blur hover:bg-white/20" aria-label="Aizvērt">✕</button>
     <button type="button" data-prev class="absolute left-3 top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-2xl text-white backdrop-blur hover:bg-white/20" aria-label="Iepriekšējais">‹</button>
     <button type="button" data-next class="absolute right-3 top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-white/10 text-2xl text-white backdrop-blur hover:bg-white/20" aria-label="Nākamais">›</button>

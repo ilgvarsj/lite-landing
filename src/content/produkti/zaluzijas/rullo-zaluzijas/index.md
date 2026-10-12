@@ -56,4 +56,4 @@ Rullo žalūzijas ir mūsdienīgs un ērts risinājums loga noformēšanai. Tās
 
 ## Mērīšana un lietošana
 
-Kasešu žalūzijas (montēšanai uz pakešu tipa logiem) [mērīšanas instrukcija (PDF)](https://lite.lv/wp-content/uploads/2015/08/2015.08.20.Lite-Rullo-kasesu-zaluzijas-merisanas-instrukcija.pdf)
+Kasešu žalūzijas (montēšanai uz pakešu tipa logiem) [mērīšanas instrukcija (PDF)](/wp-content/uploads/2015/08/2015.08.20.Lite-Rullo-kasesu-zaluzijas-merisanas-instrukcija.pdf)
