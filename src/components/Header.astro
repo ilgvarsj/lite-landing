@@ -1,0 +1,183 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/lite-logo.png';
+import Icon from './Icon.astro';
+import { company, legacy, telHref } from '../data/site';
+import { navTree } from '../lib/catalog';
+import { t } from '../i18n/lv';
+
+const tree = await navTree();
+const path = Astro.url.pathname;
+const active = (prefix: string) => path.startsWith(prefix);
+
+const aboutLinks = [
+  { title: t('nav.about'), href: '/home-lat/par-mums/' },
+  { title: t('nav.tech'), href: '/tehniska-informacija/' },
+  { title: t('nav.dealers'), href: '/dileri-latvija/' },
+];
+---
+
+<div class="hidden bg-navy-950 text-[13px] text-white/75 md:block">
+  <div class="container-x flex h-9 items-center justify-between">
+    <p>Ražots Latvijā kopš {company.founded}. gada · Mērīšana, izgatavošana un uzstādīšana</p>
+    <div class="flex items-center gap-5">
+      <a href={company.phoneHref} class="flex items-center gap-1.5 hover:text-white"><Icon name="phone" size={14} />{company.phone}</a>
+      <a href={`mailto:${company.email}`} class="flex items-center gap-1.5 hover:text-white"><Icon name="mail" size={14} />{company.email}</a>
+      <span class="h-3 w-px bg-white/20"></span>
+      <a href={company.socials.facebook} class="hover:text-white" aria-label="Facebook"><Icon name="facebook" size={15} /></a>
+      <a href={company.socials.instagram} class="hover:text-white" aria-label="Instagram"><Icon name="instagram" size={15} /></a>
+      <span class="h-3 w-px bg-white/20"></span>
+      <nav aria-label="Valoda" class="flex gap-3 font-medium">
+        <span class="text-white" aria-current="true">LV</span>
+        <a href={legacy.en} hreflang="en" class="hover:text-white">EN</a>
+        <a href={legacy.ru} hreflang="ru" class="hover:text-white">RU</a>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<header id="site-header" class="sticky top-0 z-50 border-b border-transparent bg-sand-50/85 backdrop-blur-xl transition-[border-color,box-shadow] duration-300 data-[scrolled]:border-sand-200 data-[scrolled]:shadow-sm">
+  <div class="container-x flex h-16 items-center justify-between gap-6 lg:h-20">
+    <a href="/" class="shrink-0" aria-label="LITE – sākums">
+      <Image src={logo} alt="LITE" width={92} class="h-auto w-[78px] lg:w-[92px]" loading="eager" />
+    </a>
+
+    <nav aria-label="Galvenā navigācija" class="hidden lg:block">
+      <ul class="flex items-center gap-1 text-[15px] font-medium text-ink/80">
+        <li class="group/mega flex h-20 items-center" data-dropdown>
+          <a href="/produkti/" class:list={['flex items-center gap-1 rounded-full px-4 py-2 transition hover:bg-navy-50 hover:text-navy-900', active('/produkti/') && 'text-navy-900']} aria-haspopup="true" aria-expanded="false">
+            {t('nav.products')}<Icon name="chevron" size={16} class="transition group-hover/mega:rotate-180" />
+          </a>
+          <div class="invisible absolute inset-x-0 top-full translate-y-2 opacity-0 transition duration-300 ease-out-soft group-hover/mega:visible group-hover/mega:translate-y-0 group-hover/mega:opacity-100 group-focus-within/mega:visible group-focus-within/mega:translate-y-0 group-focus-within/mega:opacity-100 group-data-[open]/mega:visible group-data-[open]/mega:translate-y-0 group-data-[open]/mega:opacity-100">
+            <div class="container-x">
+              <div class="grid grid-cols-4 gap-x-8 gap-y-8 rounded-3xl border border-sand-200 bg-white p-8 shadow-2xl shadow-navy-950/10 xl:grid-cols-5">
+                {tree.map((cat) => (
+                  <div>
+                    <a href={cat.href} class="font-display text-lg text-navy-900 hover:text-berry-600">{cat.title}</a>
+                    {cat.children.length > 0 && (
+                      <ul class="mt-3 space-y-1.5 text-sm font-normal text-muted">
+                        {cat.children.map((c) => (
+                          <li><a href={c.href} class="hover:text-navy-800">{c.title}</a></li>
+                        ))}
+                      </ul>
+                    )}
+                    {cat.id === 'aizkari' && (
+                      <ul class="mt-3 space-y-1.5 text-sm font-normal text-muted">
+                        <li><a href={legacy.fabrics} class="inline-flex items-center gap-1 hover:text-navy-800">Aizkaru audumu kolekcijas <Icon name="external" size={12} /></a></li>
+                      </ul>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="group/about relative flex h-20 items-center" data-dropdown>
+          <a href="/home-lat/par-mums/" class:list={['flex items-center gap-1 rounded-full px-4 py-2 transition hover:bg-navy-50 hover:text-navy-900', aboutLinks.some((l) => active(l.href)) && 'text-navy-900']} aria-haspopup="true" aria-expanded="false">
+            {t('nav.about')}<Icon name="chevron" size={16} class="transition group-hover/about:rotate-180" />
+          </a>
+          <ul class="invisible absolute left-0 top-full w-60 translate-y-2 rounded-2xl border border-sand-200 bg-white p-2 opacity-0 shadow-xl shadow-navy-950/10 transition duration-300 ease-out-soft group-hover/about:visible group-hover/about:translate-y-0 group-hover/about:opacity-100 group-focus-within/about:visible group-focus-within/about:translate-y-0 group-focus-within/about:opacity-100 group-data-[open]/about:visible group-data-[open]/about:translate-y-0 group-data-[open]/about:opacity-100">
+            {aboutLinks.map((l) => (
+              <li><a href={l.href} class="block rounded-xl px-4 py-2.5 text-sm hover:bg-sand-100 hover:text-navy-900">{l.title}</a></li>
+            ))}
+          </ul>
+        </li>
+        <li><a href={legacy.portfolio} class="rounded-full px-4 py-2 transition hover:bg-navy-50 hover:text-navy-900">{t('nav.portfolio')}</a></li>
+        <li><a href={legacy.sale} class="rounded-full px-4 py-2 transition hover:bg-navy-50 hover:text-navy-900">{t('nav.sale')}</a></li>
+        <li><a href="/kontakti/" class:list={['rounded-full px-4 py-2 transition hover:bg-navy-50 hover:text-navy-900', active('/kontakti/') && 'text-navy-900']}>{t('nav.contacts')}</a></li>
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a href="/kontakti/#forma" class="btn-accent hidden sm:inline-flex">{t('cta.measure')}</a>
+      <a href={telHref(company.phone)} class="grid size-11 place-items-center rounded-full text-navy-800 hover:bg-navy-50 lg:hidden" aria-label={`${t('cta.call')} ${company.phone}`}>
+        <Icon name="phone" />
+      </a>
+      <button type="button" class="grid size-11 place-items-center rounded-full text-navy-800 hover:bg-navy-50 lg:hidden" aria-label={t('nav.menu')} aria-controls="mobile-nav" data-open-menu>
+        <Icon name="menu" size={24} />
+      </button>
+    </div>
+  </div>
+</header>
+
+<dialog id="mobile-nav" class="m-0 ml-auto h-dvh max-h-none w-full max-w-md bg-sand-50 p-0 text-ink backdrop:bg-navy-950/40 backdrop:backdrop-blur-sm">
+  <div class="flex h-16 items-center justify-between border-b border-sand-200 px-4">
+    <Image src={logo} alt="LITE" width={78} class="h-auto w-[78px]" />
+    <button type="button" class="grid size-11 place-items-center rounded-full hover:bg-sand-100" aria-label={t('nav.close')} data-close-menu>
+      <Icon name="close" size={24} />
+    </button>
+  </div>
+  <nav aria-label="Mobilā navigācija" class="px-4 py-4">
+    <ul class="divide-y divide-sand-200">
+      {tree.map((cat) => (
+        <li>
+          {cat.children.length > 0 ? (
+            <details class="group">
+              <summary class="flex cursor-pointer list-none items-center justify-between py-3.5 font-display text-lg text-navy-900">
+                {cat.title}
+                <Icon name="chevron" class="transition group-open:rotate-180" />
+              </summary>
+              <ul class="space-y-1 pb-4 pl-3 text-[15px] text-muted">
+                <li><a href={cat.href} class="block py-1.5 font-medium text-navy-800">Visi – {cat.title.toLowerCase()}</a></li>
+                {cat.children.map((c) => (
+                  <li><a href={c.href} class="block py-1.5">{c.title}</a></li>
+                ))}
+              </ul>
+            </details>
+          ) : (
+            <a href={cat.href} class="block py-3.5 font-display text-lg text-navy-900">{cat.title}</a>
+          )}
+        </li>
+      ))}
+    </ul>
+    <ul class="mt-6 grid grid-cols-2 gap-2 text-[15px]">
+      {aboutLinks.map((l) => <li><a href={l.href} class="block rounded-xl bg-white px-4 py-3">{l.title}</a></li>)}
+      <li><a href={legacy.portfolio} class="block rounded-xl bg-white px-4 py-3">{t('nav.portfolio')}</a></li>
+      <li><a href={legacy.sale} class="block rounded-xl bg-white px-4 py-3">{t('nav.sale')}</a></li>
+      <li><a href="/kontakti/" class="block rounded-xl bg-white px-4 py-3">{t('nav.contacts')}</a></li>
+    </ul>
+    <div class="mt-6 grid gap-2">
+      <a href="/kontakti/#forma" class="btn-accent">{t('cta.measure')}</a>
+      <a href={company.phoneHref} class="btn border border-navy-200 text-navy-800"><Icon name="phone" size={16} />{company.phone}</a>
+    </div>
+    <div class="mt-6 flex gap-4 text-sm font-medium text-muted">
+      <span class="text-navy-900">LV</span><a href={legacy.en}>EN</a><a href={legacy.ru}>RU</a>
+    </div>
+  </nav>
+</dialog>
+
+<script>
+  const header = document.getElementById('site-header')!;
+  const onScroll = () => header.toggleAttribute('data-scrolled', window.scrollY > 8);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Mobile drawer
+  const dialog = document.getElementById('mobile-nav') as HTMLDialogElement;
+  document.querySelector('[data-open-menu]')?.addEventListener('click', () => dialog.showModal());
+  document.querySelector('[data-close-menu]')?.addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) dialog.close();
+  });
+
+  // Desktop dropdowns: keep aria-expanded in sync, close on Escape
+  document.querySelectorAll<HTMLElement>('[data-dropdown]').forEach((li) => {
+    const trigger = li.querySelector('a')!;
+    const set = (open: boolean) => {
+      li.toggleAttribute('data-open', open);
+      trigger.setAttribute('aria-expanded', String(open));
+    };
+    li.addEventListener('mouseenter', () => set(true));
+    li.addEventListener('mouseleave', () => set(false));
+    li.addEventListener('focusout', (e) => {
+      if (!li.contains(e.relatedTarget as Node)) set(false);
+    });
+    li.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        set(false);
+        (document.activeElement as HTMLElement)?.blur();
+        trigger.focus();
+      }
+    });
+  });
+</script>

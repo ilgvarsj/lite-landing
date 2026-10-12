@@ -1,0 +1,40 @@
+---
+import { getEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import ServiceSteps from '../../components/ServiceSteps.astro';
+import ContactSection from '../../components/ContactSection.astro';
+import Icon from '../../components/Icon.astro';
+import { categories, OVERVIEW_ID } from '../../lib/catalog';
+import { categoryBlurbs } from '../../data/site';
+import { t } from '../../i18n/lv';
+
+const overview = (await getEntry('produkti', OVERVIEW_ID))!;
+const cats = await categories();
+// The overview body ends with a "full service" section that ServiceSteps already covers.
+const intro = (overview.body ?? '').split(/\n## .*Pilna servisa/)[0];
+const paragraphs = intro.split(/\n\n+/).filter((p) => p && !p.startsWith('#'));
+---
+
+<BaseLayout title={overview.data.seoTitle ?? t('nav.products')} rawTitle={!!overview.data.seoTitle} description={overview.data.description}>
+  <PageHero title="Produkcija un pakalpojumi" lead={paragraphs[0]} crumbs={[{ title: t('nav.products') }]}>
+    <a href="#forma" class="btn-primary">{t('cta.measure')} <Icon name="arrow" size={16} /></a>
+  </PageHero>
+
+  <section class="py-14 lg:py-20">
+    <div class="container-x grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {cats.map((c, i) => (
+        <div class="reveal" style={`transition-delay:${(i % 3) * 80}ms`}>
+          <ProductCard entry={c} blurb={categoryBlurbs[c.id]} eager={i < 3} />
+        </div>
+      ))}
+    </div>
+    <div class="container-x mt-14 grid gap-6 text-lg leading-relaxed text-muted lg:grid-cols-2">
+      {paragraphs.slice(1).map((p) => <p>{p}</p>)}
+    </div>
+  </section>
+
+  <ServiceSteps />
+  <ContactSection />
+</BaseLayout>

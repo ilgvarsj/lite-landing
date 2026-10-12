@@ -1,0 +1,33 @@
+---
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from './PageHero.astro';
+import ContactSection from './ContactSection.astro';
+import Icon from './Icon.astro';
+import { t } from '../i18n/lv';
+
+interface Props {
+  id: string;
+  title?: string;
+  lead?: string;
+  crumbs?: { title: string; href?: string }[];
+}
+const entry = (await getEntry('lapas', Astro.props.id))!;
+const { Content } = await render(entry);
+const title = Astro.props.title ?? entry.data.title;
+---
+
+<BaseLayout title={entry.data.seoTitle ?? title} rawTitle={!!entry.data.seoTitle} description={entry.data.description} image={entry.data.cover}>
+  <PageHero title={title} lead={Astro.props.lead} crumbs={[...(Astro.props.crumbs ?? []), { title }]} image={entry.data.cover} imageAlt={entry.data.coverAlt}>
+    <a href="#forma" class="btn-primary">{t('cta.contact')} <Icon name="arrow" size={16} /></a>
+  </PageHero>
+  <section class="py-14 lg:py-20">
+    <div class="container-x">
+      <article class="prose-lite mx-auto max-w-3xl">
+        <Content />
+      </article>
+      <slot />
+    </div>
+  </section>
+  <ContactSection />
+</BaseLayout>

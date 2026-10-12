@@ -1,0 +1,68 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/lite-logo.png';
+import Icon from './Icon.astro';
+import { company, locations, legacy, telHref } from '../data/site';
+import { categories, productHref } from '../lib/catalog';
+import { t } from '../i18n/lv';
+
+const cats = await categories();
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-24 bg-navy-950 text-white/70">
+  <div class="container-x grid gap-12 py-16 lg:grid-cols-12">
+    <div class="lg:col-span-4">
+      <div class="inline-block rounded-2xl bg-white px-4 py-3">
+        <Image src={logo} alt="LITE" width={84} class="h-auto w-[84px]" />
+      </div>
+      <p class="mt-6 max-w-sm text-[15px] leading-relaxed">
+        {company.founded}. gadā Latvijā dzimis ražošanas uzņēmums. Izgatavojam visa veida logu žalūzijas, piedāvājam āra
+        ēnošanas sistēmas un pēc pasūtījuma šujam dienas un nakts aizkarus.
+      </p>
+      <div class="mt-6 flex gap-3">
+        <a href={company.socials.facebook} class="grid size-10 place-items-center rounded-full border border-white/15 transition hover:border-white/50 hover:text-white" aria-label="Facebook"><Icon name="facebook" size={18} /></a>
+        <a href={company.socials.instagram} class="grid size-10 place-items-center rounded-full border border-white/15 transition hover:border-white/50 hover:text-white" aria-label="Instagram"><Icon name="instagram" size={18} /></a>
+      </div>
+    </div>
+
+    <nav class="lg:col-span-2" aria-label={t('nav.products')}>
+      <h2 class="font-sans text-sm font-semibold uppercase tracking-widest text-white">{t('nav.products')}</h2>
+      <ul class="mt-5 space-y-2.5 text-[15px]">
+        {cats.slice(0, 7).map((c) => <li><a href={productHref(c.id)} class="hover:text-white">{c.data.title}</a></li>)}
+      </ul>
+    </nav>
+
+    <nav class="lg:col-span-2" aria-label={t('footer.useful')}>
+      <h2 class="font-sans text-sm font-semibold uppercase tracking-widest text-white">{t('footer.useful')}</h2>
+      <ul class="mt-5 space-y-2.5 text-[15px]">
+        <li><a href="/home-lat/par-mums/" class="hover:text-white">{t('nav.about')}</a></li>
+        <li><a href="/tehniska-informacija/" class="hover:text-white">{t('nav.tech')}</a></li>
+        <li><a href="/dileri-latvija/" class="hover:text-white">{t('nav.dealers')}</a></li>
+        <li><a href={legacy.portfolio} class="hover:text-white">{t('nav.portfolio')}</a></li>
+        <li><a href={legacy.blog} class="hover:text-white">{t('nav.blog')}</a></li>
+        <li><a href={legacy.privacy} class="hover:text-white">{t('footer.privacy')}</a></li>
+      </ul>
+    </nav>
+
+    <div class="grid gap-8 sm:grid-cols-2 lg:col-span-4">
+      {locations.map((l) => (
+        <address class="not-italic">
+          <h2 class="font-sans text-sm font-semibold uppercase tracking-widest text-white">{l.name}</h2>
+          <ul class="mt-5 space-y-2.5 text-[15px]">
+            <li><a href={l.maps} class="flex gap-2 hover:text-white"><Icon name="pin" size={18} class="mt-0.5 shrink-0" />{l.street}, {l.city}</a></li>
+            <li><a href={telHref(l.phone)} class="flex gap-2 hover:text-white"><Icon name="phone" size={18} class="mt-0.5 shrink-0" />{l.phone}</a></li>
+            <li><a href={`mailto:${l.email}`} class="flex gap-2 hover:text-white"><Icon name="mail" size={18} class="mt-0.5 shrink-0" />{l.email}</a></li>
+            <li class="flex gap-2"><Icon name="clock" size={18} class="mt-0.5 shrink-0" /><span>{l.hours.map((h) => <>{h.days} {h.time}<br /></>)}</span></li>
+          </ul>
+        </address>
+      ))}
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <div class="container-x flex flex-col gap-2 py-6 text-sm text-white/50 sm:flex-row sm:items-center sm:justify-between">
+      <p>© {company.founded}–{year} {company.legalName}. Visas tiesības aizsargātas.</p>
+      <p>Ražots Latvijā</p>
+    </div>
+  </div>
+</footer>

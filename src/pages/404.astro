@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+---
+
+<BaseLayout title="Lapa nav atrasta">
+  <section class="container-x py-28 text-center">
+    <p class="eyebrow">404</p>
+    <h1 class="mt-4 text-5xl">Šī lapa nav atrasta</h1>
+    <p class="mx-auto mt-5 max-w-md text-lg text-muted">Iespējams, lapa ir pārvietota. Apskatiet mūsu produktus vai sazinieties ar mums.</p>
+    <div class="mt-9 flex justify-center gap-3">
+      <a href="/produkti/" class="btn-primary">Produkti <Icon name="arrow" size={16} /></a>
+      <a href="/kontakti/" class="btn border border-navy-200 text-navy-800">Kontakti</a>
+    </div>
+  </section>
+</BaseLayout>

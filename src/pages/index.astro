@@ -1,0 +1,101 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import ProductCard from '../components/ProductCard.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ServiceSteps from '../components/ServiceSteps.astro';
+import ContactSection from '../components/ContactSection.astro';
+import Icon from '../components/Icon.astro';
+import { categories, productHref } from '../lib/catalog';
+import { categoryBlurbs, company, legacy } from '../data/site';
+
+const cats = await categories();
+const featured = cats.slice(0, 4);
+const more = cats.slice(4);
+const aboutImage = cats.find((c) => c.id === 'aizkaru-stangas-sliedes')?.data;
+
+const reasons = [
+  { icon: 'factory', title: 'Sava ražotne Rīgā', text: 'Žalūzijas izgatavojam paši savā fabrikā Pārdaugavā – katru pēc individuāla pasūtījuma un precīziem izmēriem.' },
+  { icon: 'sparkle', title: 'Plaša izvēle', text: 'Audumi un materiāli no vairāk nekā 20 Eiropas ražotājiem – mājām, birojiem, skolām un ārstniecības iestādēm.' },
+  { icon: 'shield', title: 'Bērniem drošas sistēmas', text: 'Motorizētas un bezauklu sistēmas, kas ir drošas ģimenēm ar maziem bērniem.' },
+] as const;
+---
+
+<BaseLayout title="Logu žalūzijas un aizkari | LITE" rawTitle>
+  <Hero />
+
+  <section class="py-20 lg:py-28">
+    <div class="container-x">
+      <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <SectionHeading eyebrow="Produkti" title="Viss logu noformējumam vienuviet" intro="Izvēlieties produktu grupu – katru risinājumu pielāgojam jūsu loga izmēriem, telpai un gaumei." />
+        <a href="/produkti/" class="btn border border-navy-200 text-navy-800 hover:border-navy-800 self-start lg:self-auto">Visi produkti <Icon name="arrow" size={16} /></a>
+      </div>
+      <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {featured.map((c, i) => (
+          <div class="reveal" style={`transition-delay:${i * 80}ms`}>
+            <ProductCard entry={c} blurb={categoryBlurbs[c.id]} size="lg" />
+          </div>
+        ))}
+      </div>
+      <ul class="mt-8 flex flex-wrap gap-2.5">
+        {more.map((c) => (
+          <li>
+            <a href={productHref(c.id)} class="inline-flex items-center gap-2 rounded-full border border-sand-300 bg-white px-5 py-2.5 text-[15px] font-medium text-ink/80 transition hover:border-navy-800 hover:text-navy-900">
+              {c.data.title} <Icon name="arrow" size={14} />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <ServiceSteps />
+
+  <section class="py-20 lg:py-28">
+    <div class="container-x grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+      <div class="relative">
+        {aboutImage?.cover && (
+          <Image src={aboutImage.cover} alt={aboutImage.coverAlt ?? 'Aizkaru stangas interjerā'} widths={[480, 720, 960]} sizes="(min-width: 1024px) 45vw, 100vw" class="aspect-[4/5] w-full rounded-[2rem] object-cover" />
+        )}
+        <div class="absolute -right-3 bottom-10 hidden rounded-2xl bg-navy-800 p-6 text-white shadow-xl sm:block lg:-right-10">
+          <p class="font-display text-5xl">{company.founded}</p>
+          <p class="mt-1 text-sm text-white/70">dibināts Latvijā</p>
+        </div>
+      </div>
+      <div>
+        <SectionHeading eyebrow="Par LITE" title="Latvijas ražotājs ar vairāk nekā 25 gadu pieredzi" />
+        <div class="mt-6 space-y-4 text-lg leading-relaxed text-muted">
+          <p>Mēs esam {company.founded}. gadā Latvijā dzimis ražošanas uzņēmums, kas labprāt uzņemsies rūpes par jūsu logu noformējumu. Izgatavojam visa veida logu žalūzijas, piedāvājam āra ēnošanas sistēmas un pēc klientu pasūtījuma šujam dienas un nakts aizkarus.</p>
+        </div>
+        <ul class="mt-10 space-y-6">
+          {reasons.map((r) => (
+            <li class="flex gap-4">
+              <span class="grid size-12 shrink-0 place-items-center rounded-2xl bg-navy-50 text-navy-800"><Icon name={r.icon} size={22} /></span>
+              <div>
+                <h3 class="font-sans text-lg font-semibold text-navy-900">{r.title}</h3>
+                <p class="mt-1 leading-relaxed text-muted">{r.text}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <div class="mt-10 flex flex-wrap gap-3">
+          <a href="/home-lat/par-mums/" class="btn-primary">Uzzināt vairāk <Icon name="arrow" size={16} /></a>
+          <a href={legacy.portfolio} class="btn border border-navy-200 text-navy-800 hover:border-navy-800">Mūsu projekti</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-sand-100 py-16">
+    <div class="container-x flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between">
+      <div>
+        <h2 class="text-3xl sm:text-4xl">Aizkaru audumu izpārdošana</h2>
+        <p class="mt-2 text-lg text-muted">Dažādu Eiropas ražotāju aizkaru audumi ar atlaidēm līdz 80%.</p>
+      </div>
+      <a href={legacy.sale} class="btn-accent shrink-0">Apskatīt piedāvājumu <Icon name="arrow" size={16} /></a>
+    </div>
+  </section>
+
+  <ContactSection />
+</BaseLayout>

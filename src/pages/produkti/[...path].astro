@@ -1,0 +1,92 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import Gallery from '../../components/Gallery.astro';
+import ContactSection from '../../components/ContactSection.astro';
+import Icon from '../../components/Icon.astro';
+import { allProducts, breadcrumbTrail, childrenOf, parentId, productHref, OVERVIEW_ID, type Product } from '../../lib/catalog';
+import { categoryBlurbs, company, telHref } from '../../data/site';
+import { t } from '../../i18n/lv';
+
+export async function getStaticPaths() {
+  const all = await allProducts();
+  return all.filter((p) => p.id !== OVERVIEW_ID).map((entry) => ({ params: { path: entry.id }, props: { entry } }));
+}
+
+interface Props {
+  entry: Product;
+}
+const { entry } = Astro.props;
+const { title, seoTitle, description, cover, coverAlt, gallery } = entry.data;
+const { Content } = await render(entry);
+
+const crumbs = [{ title: t('nav.products'), href: '/produkti/' }, ...(await breadcrumbTrail(entry.id)), { title }];
+const children = await childrenOf(entry.id);
+const parent = parentId(entry.id);
+const siblings = parent ? (await childrenOf(parent)).filter((p) => p.id !== entry.id) : [];
+const lead = categoryBlurbs[entry.id] ?? description;
+const hasBody = entry.body && entry.body.trim().length > 0;
+---
+
+<BaseLayout title={seoTitle ?? title} rawTitle={!!seoTitle} description={description} image={cover}>
+  <PageHero title={title} lead={lead} crumbs={crumbs} image={cover} imageAlt={coverAlt}>
+    <a href="#forma" class="btn-primary">{t('cta.measure')} <Icon name="arrow" size={16} /></a>
+    <a href={telHref(company.phone)} class="btn border border-navy-200 text-navy-800 hover:border-navy-800"><Icon name="phone" size={16} />{company.phone}</a>
+  </PageHero>
+
+  {children.length > 0 && (
+    <section class="py-14 lg:py-20">
+      <div class="container-x">
+        <h2 class="text-3xl sm:text-4xl">Izvēlieties veidu</h2>
+        <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {children.map((c) => <ProductCard entry={c} />)}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {hasBody && (
+    <section class:list={['py-14 lg:py-20', children.length > 0 && 'border-t border-sand-200']}>
+      <div class="container-x grid gap-12 lg:grid-cols-12">
+        <article class="prose-lite lg:col-span-7 xl:col-span-8">
+          <Content />
+        </article>
+        <aside class="lg:col-span-5 xl:col-span-4">
+          <div class="sticky top-28 space-y-5">
+            <div class="rounded-3xl bg-navy-800 p-7 text-white">
+              <h2 class="text-2xl text-white">Nepieciešama konsultācija vai speciālista vizīte?</h2>
+              <p class="mt-3 text-white/70">Sazinieties ar mums – ieteiksim risinājumu un sagatavosim izmaksu piedāvājumu.</p>
+              <div class="mt-6 grid gap-2.5">
+                <a href={telHref(company.phone)} class="btn bg-white text-navy-900 hover:bg-sand-100"><Icon name="phone" size={16} />{company.phone}</a>
+                <a href="#forma" class="btn-ghost text-white">Rakstīt mums</a>
+              </div>
+            </div>
+            {siblings.length > 0 && (
+              <nav class="rounded-3xl bg-white p-7 ring-1 ring-sand-200" aria-label={t('related')}>
+                <h2 class="font-sans text-sm font-semibold uppercase tracking-widest text-muted">{t('related')}</h2>
+                <ul class="mt-4 divide-y divide-sand-200">
+                  {siblings.map((s) => (
+                    <li><a href={productHref(s.id)} class="flex items-center justify-between py-2.5 text-[15px] text-ink/80 hover:text-navy-800">{s.data.title}<Icon name="chevron-right" size={16} class="text-sand-300" /></a></li>
+                  ))}
+                </ul>
+              </nav>
+            )}
+          </div>
+        </aside>
+      </div>
+    </section>
+  )}
+
+  {gallery.length > 0 && (
+    <section class="pb-6">
+      <div class="container-x">
+        <h2 class="mb-8 text-3xl sm:text-4xl">{t('gallery')}</h2>
+        <Gallery images={gallery} />
+      </div>
+    </section>
+  )}
+
+  <ContactSection subject={title} />
+</BaseLayout>

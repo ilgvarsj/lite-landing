@@ -1,0 +1,115 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/source-serif-4/opsz.css';
+@import '@fontsource-variable/source-serif-4/opsz-italic.css';
+
+@theme {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Source Serif 4 Variable', ui-serif, Georgia, serif;
+
+  /* Brand: navy + red taken from the LITE logo */
+  --color-navy-50: #eef0f8;
+  --color-navy-100: #d9ddef;
+  --color-navy-200: #b3bbdf;
+  --color-navy-500: #3a4a8c;
+  --color-navy-700: #24357a;
+  --color-navy-800: #1b2b69;
+  --color-navy-900: #121d4a;
+  --color-navy-950: #0b1230;
+  --color-berry-500: #c42454;
+  --color-berry-600: #ac1a46;
+  --color-berry-700: #8e143a;
+
+  /* Warm neutrals */
+  --color-sand-50: #faf8f4;
+  --color-sand-100: #f3efe7;
+  --color-sand-200: #e7e0d3;
+  --color-sand-300: #d6ccba;
+  --color-ink: #1d1f26;
+  --color-muted: #5d6070;
+
+  --radius-xl2: 1.25rem;
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-sand-50 text-ink font-sans antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+  h1, h2, h3 {
+    @apply font-display text-navy-900;
+    
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-berry-600;
+  }
+  ::selection {
+    @apply bg-navy-800 text-white;
+  }
+}
+
+@utility container-x {
+  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+@utility eyebrow {
+  @apply text-xs font-semibold uppercase tracking-[0.18em] text-berry-600;
+}
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition duration-300;
+}
+@utility btn-primary {
+  @apply btn bg-navy-800 text-white shadow-sm hover:bg-navy-900 hover:shadow-md;
+}
+@utility btn-accent {
+  @apply btn bg-berry-600 text-white hover:bg-berry-700;
+}
+@utility btn-ghost {
+  @apply btn border border-current/25 hover:border-current/60 hover:bg-white/10;
+}
+@utility card-lift {
+  @apply transition duration-500 ease-out-soft hover:-translate-y-1 hover:shadow-xl hover:shadow-navy-900/10;
+}
+
+@layer components {
+  /* Long-form Markdown content imported from WordPress */
+  .prose-lite {
+    @apply text-[1.0625rem] leading-relaxed text-ink/90;
+  }
+  .prose-lite > * + * { @apply mt-5; }
+  .prose-lite h2 { @apply mt-12 text-2xl sm:text-3xl; }
+  .prose-lite h3 { @apply mt-10 text-xl sm:text-2xl; }
+  .prose-lite h4, .prose-lite h5, .prose-lite h6 { @apply mt-8 font-sans text-base font-semibold text-navy-900; }
+  .prose-lite h2 + *, .prose-lite h3 + *, .prose-lite h4 + *, .prose-lite h5 + * { @apply mt-3; }
+  .prose-lite a { @apply font-medium text-navy-700 underline decoration-navy-200 underline-offset-4 transition hover:decoration-berry-600; }
+  .prose-lite strong { @apply font-semibold text-ink; }
+  .prose-lite ul { @apply space-y-2 pl-0; }
+  .prose-lite ul > li { @apply relative pl-6; }
+  .prose-lite ul > li::before {
+    content: '';
+    @apply absolute left-0 top-[0.7em] h-1.5 w-1.5 rounded-full bg-berry-600;
+  }
+  .prose-lite ol { @apply list-decimal space-y-2 pl-6; }
+  .prose-lite > :first-child { @apply mt-0; }
+}
+
+/* Only hidden when JS is running (html.js), so content never stays invisible */
+@utility reveal {
+  @media (prefers-reduced-motion: no-preference) {
+    :where(.js) & {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    transition: opacity 0.8s var(--ease-out-soft), transform 0.8s var(--ease-out-soft);
+    :where(.js) &.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}

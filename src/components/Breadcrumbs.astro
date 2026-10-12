@@ -1,0 +1,31 @@
+---
+import Icon from './Icon.astro';
+import { t } from '../i18n/lv';
+
+interface Props {
+  items: { title: string; href?: string }[];
+}
+const items = [{ title: t('home'), href: '/' }, ...Astro.props.items];
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map((it, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: it.title,
+    ...(it.href ? { item: new URL(it.href, Astro.site).href } : {}),
+  })),
+};
+---
+
+<nav aria-label="Navigācijas ceļš" class="text-sm text-muted">
+  <ol class="flex flex-wrap items-center gap-1.5">
+    {items.map((it, i) => (
+      <li class="flex items-center gap-1.5">
+        {i > 0 && <Icon name="chevron-right" size={14} class="text-sand-300" />}
+        {it.href ? <a href={it.href} class="hover:text-navy-800">{it.title}</a> : <span aria-current="page" class="text-ink">{it.title}</span>}
+      </li>
+    ))}
+  </ol>
+  <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+</nav>

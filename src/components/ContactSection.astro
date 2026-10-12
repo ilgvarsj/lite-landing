@@ -1,0 +1,39 @@
+---
+import ContactForm from './ContactForm.astro';
+import Icon from './Icon.astro';
+import { locations, telHref } from '../data/site';
+import { t } from '../i18n/lv';
+
+interface Props {
+  subject?: string;
+  id?: string;
+}
+const { subject, id = 'forma' } = Astro.props;
+---
+
+<section id={id} class="scroll-mt-28 py-20 lg:py-28">
+  <div class="container-x">
+    <div class="grid overflow-hidden rounded-[2rem] bg-white ring-1 ring-sand-200 lg:grid-cols-12">
+      <div class="p-6 sm:p-10 lg:col-span-7 lg:p-14">
+        <p class="eyebrow">Sazinies ar mums</p>
+        <h2 class="mt-4 text-3xl sm:text-4xl">{t('form.title')}</h2>
+        <p class="mt-4 max-w-lg text-muted">Pastāstiet par savu logu vai telpu – ieteiksim risinājumu un sagatavosim cenas piedāvājumu.</p>
+        <div class="mt-8"><ContactForm subject={subject} /></div>
+      </div>
+      <div class="grid gap-px bg-sand-200 lg:col-span-5">
+        {locations.map((l) => (
+          <div class="bg-sand-100 p-6 sm:p-10">
+            <p class="text-sm font-semibold uppercase tracking-widest text-berry-600">{l.area}</p>
+            <h3 class="mt-2 text-2xl">{l.name}</h3>
+            <ul class="mt-5 space-y-2.5 text-[15px] text-ink/80">
+              <li><a href={l.maps} class="flex gap-2.5 hover:text-navy-800"><Icon name="pin" size={18} class="mt-0.5 shrink-0 text-navy-500" />{l.street}, {l.city}</a></li>
+              <li><a href={telHref(l.phone)} class="flex gap-2.5 hover:text-navy-800"><Icon name="phone" size={18} class="mt-0.5 shrink-0 text-navy-500" />{l.phone}</a></li>
+              <li><a href={`mailto:${l.email}`} class="flex gap-2.5 hover:text-navy-800"><Icon name="mail" size={18} class="mt-0.5 shrink-0 text-navy-500" />{l.email}</a></li>
+              <li class="flex gap-2.5"><Icon name="clock" size={18} class="mt-0.5 shrink-0 text-navy-500" /><span>{l.hours.map((h) => <>{h.days} {h.time}<br /></>)}</span></li>
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

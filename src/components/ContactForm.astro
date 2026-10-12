@@ -1,0 +1,52 @@
+---
+import Icon from './Icon.astro';
+import { company } from '../data/site';
+import { t } from '../i18n/lv';
+
+interface Props {
+  /** Pre-fills the subject, e.g. the product the visitor is looking at. */
+  subject?: string;
+  dark?: boolean;
+}
+const { subject, dark = false } = Astro.props;
+
+// Static site: posts to a form service configured via PUBLIC_FORM_ENDPOINT, else falls back to mailto.
+const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT;
+const action = endpoint || `mailto:${company.email}`;
+const enctype = endpoint ? undefined : 'text/plain';
+
+const field = dark
+  ? 'w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-white placeholder:text-white/40 transition focus:border-white/50 focus:bg-white/10 focus:outline-none'
+  : 'w-full rounded-xl border border-sand-300 bg-white px-4 py-3 text-ink placeholder:text-muted/60 transition focus:border-navy-500 focus:outline-none focus:ring-4 focus:ring-navy-100';
+const label = dark ? 'mb-1.5 block text-sm font-medium text-white/80' : 'mb-1.5 block text-sm font-medium text-ink/80';
+---
+
+<form method="post" action={action} enctype={enctype} class="grid gap-4 sm:grid-cols-2">
+  <input type="hidden" name="_subject" value={subject ? `Jautājums: ${subject}` : 'Jautājums no lite.lv'} />
+  <!-- Honeypot: bots fill it, people never see it -->
+  <div class="hidden" aria-hidden="true">
+    <label>Neaizpildīt <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" /></label>
+  </div>
+  <div>
+    <label for="cf-name" class={label}>{t('form.name')} *</label>
+    <input id="cf-name" name="name" required autocomplete="name" class={field} />
+  </div>
+  <div>
+    <label for="cf-email" class={label}>{t('form.email')} *</label>
+    <input id="cf-email" name="email" type="email" required autocomplete="email" class={field} />
+  </div>
+  <div class="sm:col-span-2">
+    <label for="cf-phone" class={label}>{t('form.phone')}</label>
+    <input id="cf-phone" name="phone" type="tel" autocomplete="tel" class={field} />
+  </div>
+  <div class="sm:col-span-2">
+    <label for="cf-message" class={label}>{t('form.message')} *</label>
+    <textarea id="cf-message" name="message" required rows="5" class={field}>{subject ? `Interesē: ${subject}\n\n` : ''}</textarea>
+  </div>
+  <div class="flex flex-col gap-3 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
+    <p class:list={['text-sm', dark ? 'text-white/50' : 'text-muted']}>{t('form.note')}</p>
+    <button type="submit" class={dark ? 'btn-accent' : 'btn-primary'}>
+      {t('form.submit')} <Icon name="arrow" size={16} />
+    </button>
+  </div>
+</form>
